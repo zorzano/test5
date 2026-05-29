@@ -15,6 +15,7 @@ class DispensadorTickets:
         Devuelve una lista de 'n' tickets correlativos.
         Si 'n' no está entre 1 y 100, devuelve una lista vacía.
         """
+        variableFea="Hola"
         if not (self.MIN_TICKETS <= n <= self.MAX_TICKETS):
             return []
             
