@@ -20,13 +20,13 @@ class TestServidorTickets(unittest.TestCase):
         client_socket = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
         client_socket.settimeout(1.0)
         
-        # Pedir 3 tickets y verificar que son correlativos
+        # Pedir 3 tickets y verificar que son correlativos (incremento de 2)
         client_socket.sendto(b"3", (self.host, self.port))
         data, _ = client_socket.recvfrom(1024)
         tickets = [int(x) for x in data.decode('utf-8').split(',')]
         self.assertEqual(len(tickets), 3)
-        self.assertEqual(tickets[1], tickets[0] + 1)
-        self.assertEqual(tickets[2], tickets[1] + 1)
+        self.assertEqual(tickets[1], tickets[0] + 2)
+        self.assertEqual(tickets[2], tickets[1] + 2)
         
         # Pedir 2 tickets más y verificar correlatividad con los anteriores
         ultimo_anterior = tickets[-1]
@@ -34,8 +34,8 @@ class TestServidorTickets(unittest.TestCase):
         data, _ = client_socket.recvfrom(1024)
         nuevos_tickets = [int(x) for x in data.decode('utf-8').split(',')]
         self.assertEqual(len(nuevos_tickets), 2)
-        self.assertEqual(nuevos_tickets[0], ultimo_anterior + 1)
-        self.assertEqual(nuevos_tickets[1], nuevos_tickets[0] + 1)
+        self.assertEqual(nuevos_tickets[0], ultimo_anterior + 2)
+        self.assertEqual(nuevos_tickets[1], nuevos_tickets[0] + 2)
         
         client_socket.close()
 
